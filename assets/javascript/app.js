@@ -12,18 +12,18 @@ var questions = [
     {
     question: "Who was the first enemy of the Fantastic Four?",
     answers: [
-        { answer: "A. Dr. Doom", value: true },
+        { answer: "A. Mole Man", value: false },
         { answer: "B. Galactus", value: false },
-        { answer: "C. Mole Man", value: false },
+        { answer: "C. Dr. Doom", value: true },
         { answer: "D. Puppet Master", value: false }
     ]
     },
     {
     question: "Which of the following is NOT a true fact about the Hulk?",
     answers: [
-        { answer: "A. Very susceptible to mind control", value: true },
+        { answer: "A. Immune to all diseases", value: false },
         { answer: "B. Does not need to sleep", value: false },
-        { answer: "C. Immune to all diseases", value: false },
+        { answer: "C. Very susceptible to mind control", value: true },
         { answer: "D. Near impenatrable skin", value: false }
     ]
     },
@@ -39,8 +39,8 @@ var questions = [
     {
     question: "What creatures did the Comics Code Authority ban Marvel from adding into their comics?",
     answers: [
-        { answer: "A. Werewolves", value: true },
-        { answer: "B. Zombies", value: false },
+        { answer: "A. Zombies", value: false },
+        { answer: "B. Werewolves", value: true },
         { answer: "C. Vampires", value: false },
         { answer: "D. Aliens", value: false }
     ]
@@ -60,29 +60,36 @@ var unansweredCounter = 0;
         correctCounter++;
         $('.time').html(timer);
         $('.right').html('<p>Right answers: ' + correctCounter + '</p>');
+        $('.main').append("<p class='correct'>Congratulations! That's correct.</p>");
+        $('.correct')
+            .delay(1000)
+            .fadeOut(400);
         setTimeout(questionCounter, 1000);
       }
   
-      // Create function to update the incorrect answer counter, reset the clock, and add the number of incorrectly answered questions to the DOM
-      function wrongAnswer() {
-          incorrectCounter++;
-          $('.time').html(timer);
-          $('.wrong').html('<p>Wrong answers: ' + incorrectCounter + '</p>');
-          setTimeout(questionCounter, 1000);
-        }
+    // Create function to update the incorrect answer counter, reset the clock, and add the number of incorrectly answered questions to the DOM
+    function wrongAnswer() {
+        incorrectCounter++;
+        $('.time').html(timer);
+        $('.wrong').html('<p>Wrong answers: ' + incorrectCounter + '</p>');
+        $('.main').append("<p class='incorrect'>Oh, too bad. That is incorrect.</p>");
+        $('.incorrect')
+            .delay(1000)
+            .fadeOut(400);
+        setTimeout(questionCounter, 1000);
+    }
         
       // Create function to update the unanswered counter, reset the clock, and add the number of unanswered questions to the DOM
-      function unanswered() {
-          unansweredCounter++;
-          $('.time').html(timer);
-          $('.main').append("<p class='times-up'>Time's up!</p>");
-          $('.first-answer').css('background-color', 'green');
-          $('.unanswered').html('<p>Unanswered Questions: ' + unansweredCounter + '</p>');
-          $('.times-up')
-            .delay(2000)
+    function unanswered() {
+        unansweredCounter++;
+        $('.time').html(timer);
+        $('.main').append("<p class='times-up'>Time's up!</p>");
+        $('.unanswered').html('<p>Unanswered Questions: ' + unansweredCounter + '</p>');
+        $('.times-up')
+            .delay(1000)
             .fadeOut(400);
-          setTimeout(questionCounter, 2000);
-        }
+        setTimeout(questionCounter, 1000);
+    }
         
       // Start the game with a function to display the questions and start the time
       function startTrivia() {
@@ -166,8 +173,6 @@ $(document).ready(function() {
         } else if (chosenAnswer === answerCounter[i].answer && answerCounter[i].value === false) {
           clearInterval(clock);
           $(this).attr('class', 'wrong-answer answer');
-          $('.first-answer').css('background-color', 'green');
-          $('.first-answer').css('color', 'white');
           wrongAnswer();
         }
       }

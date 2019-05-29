@@ -34,6 +34,12 @@ body {
         border: solid yellow 2px
     }
 
+    .correct {
+        font-size: 35px;
+        color: #00a832;
+        text-align: center;
+    }
+
     .timer,
     .score {
     margin-bottom: 30px;
@@ -77,6 +83,7 @@ body {
     color: white;
     }
     
+    .incorrect,
     .times-up {
     font-size: 35px;
     color: #ff002b;
