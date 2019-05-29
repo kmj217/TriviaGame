@@ -46,9 +46,50 @@ var questions = [
     ]
     },
   ];
-//need a function to start the game when the start button is clicked
-//  This should 
 
-//Set variables for corrects answers, incorrect answers, timer, 
+//Set variables for corrects answers, incorrect answers, unanswered questions timer, question counter, 
+var counter = 0;
+var clock;
+var timer = 10;
+var correctCounter = 0;
+var incorrectCounter = 0;
+var unansweredCounter = 0;
 
-//need a function 
+$(document).ready(function() {
+    // Start the game when that start button is clicked
+    $('.answers').css('visibility', 'hidden');
+    $('body').on('click', '.start-btn', function() {
+      startTrivia();
+      $('.answers').css('visibility', 'visible');
+    });
+  
+    $('body').on('click', '.answer', function() {
+      chosenAnswer = $(this).text();
+      var answerCounter = questions[counter].answers;
+  
+      for (var i = 0; i < answerCounter.length; i++) {
+        if (chosenAnswer === answerCounter[i].answer && answerCounter[i].value === true) {
+          clearInterval(clock);
+          var right = $(this).attr('class', 'right-answer answer');
+          rightAnswer();
+        } else if (chosenAnswer === answerCounter[i].answer && answerCounter[i].value === false) {
+          clearInterval(clock);
+          $(this).attr('class', 'wrong-answer answer');
+          $('.first-answer').css('background-color', 'green');
+          $('.first-answer').css('color', 'white');
+          wrongAnswer();
+        }
+      }
+    });
+    $('body').on('click', '.reset-button', function() {
+        location.reload();
+      });
+    });
+    
+// Create function to update the correct answer counter, reset the clock, and add the number of correctly answered questions to the DOM
+    function rightAnswer() {
+      correctCounter++;
+      $('.time').html(timer);
+      $('.right').html('<p>Right answers: ' + correctCounter + '</p><br>');
+      setTimeout(questionCounter, 1000);
+    }
